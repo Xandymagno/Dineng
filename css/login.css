@@ -1,0 +1,135 @@
+/* ===== Reset: sem margens, tela cheia, sem rolagem ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ===== Tela de login ===== */
+.login-fundo {
+  height: 100vh;
+  height: 100dvh; /* viewport dinâmica (mobile)*/
+  width: 100vw;
+  display: flex;
+  align-items: center;      /* centro vertical permanente */
+  justify-content: center;  /* centro horizontal permanente */
+  background: rgb(1, 33, 74);
+  overflow: hidden;         /* fora a barra de rolagem */
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ===== Card branco central ===== */
+.login-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  padding: 40px;
+  width: 100%;
+  max-width: 380px;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto; /* se faltar espaço, o scroll fica dentro do card */
+  box-sizing: border-box;
+}
+
+.login-card .login-logo {
+  display: block;
+  margin: 0 auto 24px;
+  max-width: 200px;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.login-card h1 {
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 28px;
+  color: #0d3b7d;
+}
+
+/* ===== Campos (Usuário / Senha) ===== */
+.login-card label {
+  display: block;
+  margin-bottom: 6px;
+  color: #33475b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.login-card input {
+  display: block;
+  width: 100%;
+  padding: 13px 14px;
+  margin-bottom: 18px;
+  border: 1px solid #ccd6e0;
+  border-radius: 10px;
+  background: #f7f9fc;
+  color: #1a2b3d;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-card input::placeholder {
+  color: #9aa8b8;
+}
+
+.login-card input:focus {
+  border-color: #1e88e5;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.18);
+}
+
+/* ===== Erro de login ===== */
+.login-erro {
+  display: none; /* o auth.js ativa quando o login falha */
+  background: #fdecea;
+  border: 1px solid #f5c2c2;
+  color: #c0392b;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.login-erro.visivel {
+  display: block;
+}
+
+/* ===== Botão ===== */
+.login-card .btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.login-card .btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 18px rgba(21, 101, 192, 0.45);
+  transform: translateY(-1px);
+}
+
+.login-card .btn:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
+.login-card .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

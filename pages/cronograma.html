@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronograma — Gestão de Obras</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/cronograma.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <button id="btn-toggle" class="btn-toggle" title="Recolher menu">☰</button>
+    <div class="logo">
+      <img src="../assets/img/logo_login.png" alt="DINENG">
+    </div>
+    <nav>
+      <a href="dashboard.html" data-titulo="Dashboard">📊 <span class="menu-texto">Dashboard</span></a>
+      <a href="obras.html" data-titulo="Gestão de Obra">🏗️ <span class="menu-texto">Gestão de Obra</span></a>
+      <a href="planner.html" data-titulo="Planner">📋 <span class="menu-texto">Planner</span></a>
+      <a href="cronograma.html" data-titulo="Cronograma">📅 <span class="menu-texto">Cronograma</span></a>
+      <a href="usuarios.html" data-titulo="Usuários">👥 <span class="menu-texto">Usuários</span></a>
+    </nav>
+    <div class="sidebar-rodape">
+      <a href="#" id="btn-sair" data-titulo="Sair">🚪 <span class="menu-texto">Sair</span></a>
+    </div>
+  </aside>
+
+  <div class="conteudo">
+    <main class="cronograma-wrap">
+
+      <header class="cronograma-cabecalho">
+        <h1>📅 Cronograma</h1>
+        <p>Obras com tarefas e linha do tempo (estilo MS Project)</p>
+      </header>
+
+      <section class="filtros-cronograma">
+        <select id="filtro-obra" aria-label="Filtrar por obra">
+          <option value="">Todas as obras</option>
+        </select>
+
+        <div class="modos-visao">
+          <button class="btn-modo" data-modo="Day">Dia</button>
+          <button class="btn-modo ativo" data-modo="Month">Mês</button>
+          <button class="btn-modo" data-modo="Year">Ano</button>
+        </div>
+
+        <button class="btn-modo" id="btn-semana-atual">📆 Semana atual</button>
+
+        <button class="btn-modal-abrir" id="btn-timeline-geral">🗓️ Linha do tempo geral</button>
+
+        <div class="legenda-situacoes">
+          <span class="legenda-item"><i class="sit-no-prazo"></i>No prazo</span>
+          <span class="legenda-item"><i class="sit-atencao"></i>Prestar atenção</span>
+          <span class="legenda-item"><i class="sit-proximo"></i>Próximo de vencer</span>
+          <span class="legenda-item"><i class="sit-atrasada"></i>Atrasada</span>
+        </div>
+      </section>
+
+      <section id="lista-obras" class="lista-obras">
+        <p class="status-mensagem">Carregando cronograma...</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Tela sobreposta: linha do tempo de todas as tarefas -->
+  <div class="modal-overlay" id="modal-timeline">
+    <div class="modal-timeline">
+      <div class="modal-cabecalho">
+        <h2>🗓️ Linha do tempo — todas as tarefas</h2>
+        <button class="btn-fechar" id="btn-fechar-timeline" title="Fechar">✕</button>
+      </div>
+
+      <!-- Filtros dentro do modal (independentes dos cards) -->
+      <div class="modal-filtros">
+        <div class="modos-visao">
+          <button class="btn-modo" data-modo-modal="Day">Dia</button>
+          <button class="btn-modo ativo" data-modo-modal="Month">Mês</button>
+          <button class="btn-modo" data-modo-modal="Year">Ano</button>
+        </div>
+        <button class="btn-modo" id="btn-semana-modal">📆 Semana atual</button>
+      </div>
+
+      <div class="modal-corpo" id="timeline-geral"></div>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/cronograma.js"></script>
+</body>
+</html>

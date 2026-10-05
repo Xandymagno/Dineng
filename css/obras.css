@@ -1,0 +1,120 @@
+/* =========================================================
+   Melhorias visuais — Gestão de Obra
+   KPIs com ícones e cores, ações em uma linha,
+   novo ícone do botão de transição de status
+   ========================================================= */
+
+/* ===== KPIs: ícone + cor por indicador ===== */
+.card.kpi {
+  position: relative;
+  padding: 16px 18px;
+  border-left: 4px solid var(--cor-borda);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.card.kpi:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.card.kpi .kpi-rotulo {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.card.kpi .kpi-valor {
+  font-size: 30px;
+  margin-top: 2px;
+}
+
+/* Total de Obras — azul */
+.card.kpi:has(#kpi-total) {
+  border-left-color: #1a73e8;
+}
+.card.kpi:has(#kpi-total) .kpi-rotulo::before { content: "🏗️ "; }
+.card.kpi:has(#kpi-total) .kpi-valor { color: #1a73e8; }
+
+/* Contratos em Andamento — verde */
+.card.kpi:has(#kpi-andamento) {
+  border-left-color: #16a34a;
+}
+.card.kpi:has(#kpi-andamento) .kpi-rotulo::before { content: "⏳ "; }
+.card.kpi:has(#kpi-andamento) .kpi-valor { color: #16a34a; }
+
+/* Propostas Enviadas — âmbar */
+.card.kpi:has(#kpi-propostas) {
+  border-left-color: #f59e0b;
+}
+.card.kpi:has(#kpi-propostas) .kpi-rotulo::before { content: "📨 "; }
+.card.kpi:has(#kpi-propostas) .kpi-valor { color: #b45309; }
+
+/* Canceladas — vermelho */
+.card.kpi:has(#kpi-canceladas) {
+  border-left-color: #dc2626;
+}
+.card.kpi:has(#kpi-canceladas) .kpi-rotulo::before { content: "❌ "; }
+.card.kpi:has(#kpi-canceladas) .kpi-valor { color: #dc2626; }
+
+/* ===== Ações da tabela em uma única linha ===== */
+#corpo-tabela-obras td:last-child {
+  white-space: nowrap;
+}
+
+.btn-acao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: 0 2px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  vertical-align: middle;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-acao:hover {
+  background: var(--cor-fundo);
+}
+
+.btn-acao.avancar:hover {
+  background: #e8f0fe;
+  border-color: var(--cor-primaria);
+}
+
+.btn-acao.excluir:hover {
+  background: #fdecea;
+  border-color: var(--cor-erro);
+}
+
+/* ===== Novo ícone do botão de transição de status =====
+   Substitui o emoji original pelo novo via CSS */
+.btn-acao.avancar {
+  font-size: 0;
+}
+
+.btn-acao.avancar::before {
+  content: "⏭️";
+  font-size: 15px;
+}
+
+/* ===== Tabela: leitura mais confortável ===== */
+.tabela tbody tr {
+  transition: background 0.12s;
+}
+
+.tabela tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ===== Botão Nova Obra em destaque ===== */
+#btn-nova-obra {
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.35);
+}

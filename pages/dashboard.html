@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Gestão de Obras</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <button class="btn-toggle" id="btn-toggle" title="Recolher/Expandir menu">☰</button>
+
+      <div class="logo">
+        <img src="../assets/img/logo_login.png" alt="Logo">
+      </div>
+
+      <nav>
+        <a href="dashboard.html" class="ativo" data-pagina="dashboard" data-titulo="Dashboard">📊 <span class="menu-texto">Dashboard</span></a>
+        <a href="obras.html" data-pagina="obras" data-titulo="Gestão de Obra">🏗️ <span class="menu-texto">Gestão de Obra</span></a>
+        <a href="planner.html" data-pagina="planner" data-titulo="Planner">📋 <span class="menu-texto">Planner</span></a>
+        <a href="cronograma.html" data-pagina="cronograma" data-titulo="Cronograma">📅 <span class="menu-texto">Cronograma</span></a>
+        <a href="usuarios.html" data-pagina="usuarios" data-titulo="Usuários">👥 <span class="menu-texto">Usuários</span></a>
+      </nav>
+
+      <div class="sidebar-rodape">
+        <a href="#" id="btn-sair" data-titulo="Sair">🚪 <span class="menu-texto">Sair</span></a>
+      </div>
+    </aside>
+
+    <!-- ===== Conteúdo da página ===== -->
+    <main class="conteudo">
+
+      <div class="pagina-titulo">
+        <h1>Dashboard</h1>
+      </div>
+
+      <!-- KPIs (colunas virão da planilha) -->
+      <section class="grid-kpis">
+        <div class="card kpi">
+          <div class="kpi-rotulo">Obras Ativas</div>
+          <div class="kpi-valor" id="kpi-obras">--</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-rotulo">Tarefas Pendentes</div>
+          <div class="kpi-valor" id="kpi-tarefas">--</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-rotulo">Progresso Médio</div>
+          <div class="kpi-valor" id="kpi-progresso">--</div>
+        </div>
+      </section>
+
+      <!-- Gráfico -->
+      <section class="card" style="margin-bottom: 24px;">
+        <h2 style="font-size: 16px; margin-bottom: 12px;">Visão Geral</h2>
+        <canvas id="grafico-principal"></canvas>
+      </section>
+
+      <!-- Tabela de detalhamento -->
+      <section class="card">
+        <h2 style="font-size: 16px; margin-bottom: 12px;">Detalhamento</h2>
+        <table class="tabela" id="tabela-dashboard">
+          <thead>
+            <tr>
+              <!-- Colunas preenchidas pelo dashboard.js conforme a planilha -->
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script> 
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/charts.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

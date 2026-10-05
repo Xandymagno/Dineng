@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planner — Gestão de Obras</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <button class="btn-toggle" id="btn-toggle" title="Recolher/Expandir menu">☰</button>
+
+      <div class="logo">
+        <img src="../assets/img/logo_login.png" alt="Logo">
+      </div>
+
+      <nav>
+        <a href="dashboard.html" data-pagina="dashboard" data-titulo="Dashboard">📊 <span class="menu-texto">Dashboard</span></a>
+        <a href="obras.html" data-pagina="obras" data-titulo="Gestão de Obra">🏗️ <span class="menu-texto">Gestão de Obra</span></a>
+        <a href="planner.html" class="ativo" data-pagina="planner" data-titulo="Planner">📋 <span class="menu-texto">Planner</span></a>
+        <a href="cronograma.html" data-pagina="cronograma" data-titulo="Cronograma">📅 <span class="menu-texto">Cronograma</span></a>
+        <a href="usuarios.html" data-pagina="usuarios" data-titulo="Usuários">👥 <span class="menu-texto">Usuários</span></a>
+      </nav>
+
+      <div class="sidebar-rodape">
+        <a href="#" id="btn-sair" data-titulo="Sair">🚪 <span class="menu-texto">Sair</span></a>
+      </div>
+    </aside>
+
+    <!-- ===== Conteúdo da página ===== -->
+    <main class="conteudo">
+
+      <div class="pagina-titulo">
+        <h1>Planner</h1>
+        <button class="btn" id="btn-nova-tarefa">+ Nova Tarefa</button>
+      </div>
+
+      <!-- Lista de obras em andamento + Kanban por status -->
+      <div class="planner-layout">
+
+        <!-- Coluna de obras: clique no nome abre as tarefas vinculadas -->
+        <aside class="card lista-obras">
+          <h2 class="lista-obras-titulo">Obras em Andamento</h2>
+          <div id="lista-obras"></div>
+        </aside>
+
+        <!-- Quadro Kanban (colunas = status da tarefa) -->
+        <section class="kanban-area">
+          <div class="kanban-titulo">
+            <span id="kanban-obra-nome">Todas as obras</span>
+            <span class="kanban-dica">💡 Arraste os cartões entre os status</span>
+          </div>
+          <div class="kanban" id="kanban"></div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== Modal: Criar / Editar tarefa ===== -->
+  <div class="modal-fundo" id="modal-tarefa">
+    <div class="modal">
+      <div class="modal-cabecalho">
+        <h2 id="modal-titulo">Nova Tarefa</h2>
+        <button class="modal-fechar" id="btn-fechar-modal" title="Fechar">✕</button>
+      </div>
+
+      <form id="form-tarefa">
+        <input type="hidden" id="tarefa-id">
+
+        <div class="campo">
+          <label for="tarefa-nome">Nome da tarefa</label>
+          <input type="text" id="tarefa-nome" required>
+        </div>
+
+        <div class="campo">
+          <label for="tarefa-obra">Obra (projeto)</label>
+          <select id="tarefa-obra" required></select>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="tarefa-etapa">Etapa (status_tarefas)</label>
+            <select id="tarefa-etapa" required></select>
+          </div>
+
+          <div class="campo">
+            <label for="tarefa-status">Status</label>
+            <select id="tarefa-status" required>
+              <option>À Iniciar</option>
+              <option>Em Andamento</option>
+              <option>Concluído</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="tarefa-prioridade">Prioridade</label>
+            <select id="tarefa-prioridade" required>
+              <option>Alta</option>
+              <option>Média</option>
+              <option>Baixa</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="tarefa-vencimento">Data de vencimento</label>
+            <input type="text" id="tarefa-vencimento" placeholder="dd/mm/aaaa">
+          </div>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="tarefa-responsavel">ID do responsável</label>
+            <input type="text" id="tarefa-responsavel" placeholder="Ex: 1, 2, 1000...">
+          </div>
+
+          <div class="campo">
+            <label for="tarefa-esforco">Esforço estimado (dias)</label>
+            <input type="number" id="tarefa-esforco" min="0" step="1">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="tarefa-observacao">Observação</label>
+          <textarea id="tarefa-observacao" rows="2"></textarea>
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="btn-secundario" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Modal: Histórico de mudanças da tarefa ===== -->
+  <div class="modal-fundo" id="modal-historico">
+    <div class="modal modal-historico">
+      <div class="modal-cabecalho">
+        <h2>Histórico da Tarefa</h2>
+        <button class="modal-fechar" id="btn-fechar-modal-historico" title="Fechar">✕</button>
+      </div>
+
+      <div class="status-atual-bloco">
+        <span class="modal-status-obra" id="historico-tarefa-nome"></span>
+      </div>
+
+      <!-- Linha do tempo (gerada pelo planner.js) -->
+      <div class="historico-lista" id="historico-lista"></div>
+
+      <div class="modal-acoes">
+        <button type="button" class="btn-secundario" id="btn-cancelar-historico">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/planner.js"></script>
+</body>
+</html>

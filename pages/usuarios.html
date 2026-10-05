@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usuários — Gestão de Obras</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <button class="btn-toggle" id="btn-toggle" title="Recolher/Expandir menu">☰</button>
+
+      <div class="logo">
+        <img src="../assets/img/logo_login.png" alt="Logo">
+      </div>
+
+      <nav>
+        <a href="dashboard.html" data-pagina="dashboard" data-titulo="Dashboard">📊 <span class="menu-texto">Dashboard</span></a>
+        <a href="obras.html" data-pagina="obras" data-titulo="Gestão de Obra">🏗️ <span class="menu-texto">Gestão de Obra</span></a>
+        <a href="planner.html" data-pagina="planner" data-titulo="Planner">📋 <span class="menu-texto">Planner</span></a>
+        <a href="cronograma.html" data-pagina="cronograma" data-titulo="Cronograma">📅 <span class="menu-texto">Cronograma</span></a>
+        <a href="usuarios.html" class="ativo" data-pagina="usuarios" data-titulo="Usuários">👥 <span class="menu-texto">Usuários</span></a>
+      </nav>
+
+      <div class="sidebar-rodape">
+        <a href="#" id="btn-sair" data-titulo="Sair">🚪 <span class="menu-texto">Sair</span></a>
+      </div>
+    </aside>
+
+    <!-- ===== Conteúdo da página ===== -->
+    <main class="conteudo">
+
+      <div class="pagina-titulo">
+        <h1>Controle de Usuários</h1>
+        <button class="btn" id="btn-novo-usuario">+ Novo Usuário</button>
+      </div>
+
+      <!-- Tabela de usuários (colunas conforme a aba Usuários da planilha) -->
+      <section class="card">
+        <table class="tabela" id="tabela-usuarios">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Cargo</th>
+              <th>Departamento</th>
+              <th>Situação</th>
+              <th>Telefone</th>
+              <th>Cadastro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-tabela-usuarios"></tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== Modal: Criar / Editar usuário ===== -->
+  <div class="modal-fundo" id="modal-usuario">
+    <div class="modal">
+      <div class="modal-cabecalho">
+        <h2 id="modal-titulo">Novo Usuário</h2>
+        <button class="modal-fechar" id="btn-fechar-modal" title="Fechar">✕</button>
+      </div>
+
+      <form id="form-usuario">
+        <input type="hidden" id="usuario-id">
+
+        <div class="campo">
+          <label for="usuario-nome">Nome</label>
+          <input type="text" id="usuario-nome" required>
+        </div>
+
+        <div class="campo">
+          <label for="usuario-email">Email</label>
+          <input type="email" id="usuario-email">
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="usuario-cargo">Cargo</label>
+            <input type="text" id="usuario-cargo" placeholder="Ex: Gerente Obras, CEO...">
+          </div>
+
+          <div class="campo">
+            <label for="usuario-departamento">Departamento</label>
+            <input type="text" id="usuario-departamento" placeholder="Ex: Gestão, Concessionária...">
+          </div>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="usuario-telefone">Telefone</label>
+            <input type="text" id="usuario-telefone" placeholder="Ex: 63999548837">
+          </div>
+
+          <div class="campo">
+            <label for="usuario-situacao">Situação</label>
+            <select id="usuario-situacao" required>
+              <option value="ATIVO">Ativo</option>
+              <option value="INATIVO">Inativo</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Datas controladas pelo sistema (não editáveis) -->
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="usuario-data-cadastro">Data de cadastro</label>
+            <input type="text" id="usuario-data-cadastro" disabled placeholder="Automático">
+          </div>
+
+          <div class="campo">
+            <label for="usuario-data-desativado">Data de desativação</label>
+            <input type="text" id="usuario-data-desativado" disabled placeholder="Automático">
+          </div>
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="btn-secundario" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/usuarios.js"></script>
+</body>
+</html>

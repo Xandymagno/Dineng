@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Obra — Gestão de Obras</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/obras.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <button class="btn-toggle" id="btn-toggle" title="Recolher/Expandir menu">☰</button>
+
+      <div class="logo">
+        <img src="../assets/img/logo_login.png" alt="Logo">
+      </div>
+
+      <nav>
+        <a href="dashboard.html" data-pagina="dashboard" data-titulo="Dashboard">📊 <span class="menu-texto">Dashboard</span></a>
+        <a href="obras.html" class="ativo" data-pagina="obras" data-titulo="Gestão de Obra">🏗️ <span class="menu-texto">Gestão de Obra</span></a>
+        <a href="planner.html" data-pagina="planner" data-titulo="Planner">📋 <span class="menu-texto">Planner</span></a>
+        <a href="cronograma.html" data-pagina="cronograma" data-titulo="Cronograma">📅 <span class="menu-texto">Cronograma</span></a>
+        <a href="usuarios.html" data-pagina="usuarios" data-titulo="Usuários">👥 <span class="menu-texto">Usuários</span></a>
+      </nav>
+
+      <div class="sidebar-rodape">
+        <a href="#" id="btn-sair" data-titulo="Sair">🚪 <span class="menu-texto">Sair</span></a>
+      </div>
+    </aside>
+
+    <!-- ===== Conteúdo da página ===== -->
+    <main class="conteudo">
+      <div class="pagina-titulo">
+        <h1>Gestão de Obra</h1>
+        <button class="btn" id="btn-nova-obra">+ Nova Obra</button>
+      </div>
+
+      <!-- KPIs calculados a partir dos dados -->
+      <section class="grid-kpis">
+        <div class="card kpi">
+          <div class="kpi-rotulo">Total de Obras</div>
+          <div class="kpi-valor" id="kpi-total">0</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-rotulo">Contratos em Andamento</div>
+          <div class="kpi-valor" id="kpi-andamento">0</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-rotulo">Propostas Enviadas</div>
+          <div class="kpi-valor" id="kpi-propostas">0</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-rotulo">Canceladas</div>
+          <div class="kpi-valor" id="kpi-canceladas">0</div>
+        </div>
+      </section>
+
+      <!-- Tabela de obras -->
+      <section class="card">
+        <div class="barra-filtros">
+          <input type="text" id="busca-obra" placeholder="🔍 Buscar por interessado, tipo de proposta ou responsável...">
+          <select id="filtro-status">
+            <option value="">Todos os status</option>
+            <option>CADASTRADA</option>
+            <option>ELABORAÇÃO DA PROPOSTA</option>
+            <option>PROPOSTA ENVIADA</option>
+            <option>CANCELADO</option>
+            <option>ANALISE ENERGISA</option>
+            <option>CONTRATO EM ANDAMENTO</option>
+            <option>CONTRATO ENCERRADO</option>
+            <option>AGUARDANDO PAGAMENTO</option>
+          </select>
+        </div>
+        <table class="tabela" id="tabela-obras">
+          <thead>
+            <tr>
+              <th>Cod</th>
+              <th>Interessado</th>
+              <th>Tipo de Proposta</th>
+              <th>Responsável</th>
+              <th>Telefone</th>
+              <th>Cadastro</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-tabela-obras"></tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== Modal: Criar / Editar obra ===== -->
+  <div class="modal-fundo" id="modal-obra">
+    <div class="modal">
+      <div class="modal-cabecalho">
+        <h2 id="modal-titulo">Nova Obra</h2>
+        <button class="modal-fechar" id="btn-fechar-modal" title="Fechar">✕</button>
+      </div>
+
+      <form id="form-obra">
+        <input type="hidden" id="obra-id">
+
+        <div class="campo">
+          <label for="obra-interessado">Interessado</label>
+          <input type="text" id="obra-interessado" required>
+        </div>
+
+        <div class="campo">
+          <label for="obra-tipo">Tipo de Proposta</label>
+          <textarea id="obra-tipo" rows="2" required placeholder="Ex: Projeto e construção de subestação..."></textarea>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="obra-responsavel">Responsável</label>
+            <input type="text" id="obra-responsavel">
+          </div>
+
+          <div class="campo">
+            <label for="obra-telefone">Telefone</label>
+            <input type="text" id="obra-telefone">
+          </div>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="obra-endereco">Endereço</label>
+            <input type="text" id="obra-endereco">
+          </div>
+
+          <div class="campo">
+            <label for="obra-data-solicitacao">Data de Solicitação</label>
+            <input type="text" id="obra-data-solicitacao" placeholder="dd/mm/aaaa">
+          </div>
+        </div>
+
+        <div class="campo-linha">
+          <div class="campo">
+            <label for="obra-status">Status</label>
+            <select id="obra-status" required>
+              <option>CADASTRADA</option>
+              <option>ELABORAÇÃO DA PROPOSTA</option>
+              <option>PROPOSTA ENVIADA</option>
+              <option>CANCELADO</option>
+              <option>ANALISE ENERGISA</option>
+              <option>CONTRATO EM ANDAMENTO</option>
+              <option>CONTRATO ENCERRADO</option>
+              <option>AGUARDANDO PAGAMENTO</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="obra-cadastro">Data de cadastro</label>
+            <input type="text" id="obra-cadastro" disabled placeholder="Automático">
+          </div>
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="btn-secundario" id="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Modal: Avançar status (sequência da aba status_geral) ===== -->
+  <div class="modal-fundo" id="modal-status">
+    <div class="modal modal-status">
+      <div class="modal-cabecalho">
+        <h2>Avançar Status</h2>
+        <button class="modal-fechar" id="btn-fechar-modal-status" title="Fechar">✕</button>
+      </div>
+
+      <div class="status-atual-bloco">
+        <span class="modal-status-obra" id="status-obra-nome"></span>
+        <div class="status-linha">
+          <span class="rotulo-pequeno">Status atual:</span>
+          <span id="status-atual-display"></span>
+        </div>
+      </div>
+
+      <div class="status-divisor">⬇️ Próximo status na sequência</div>
+
+      <!-- Um botão por status possível (gerado pelo obras.js) -->
+      <div class="status-opcoes" id="status-opcoes"></div>
+
+      <div class="modal-acoes">
+        <button type="button" class="btn-secundario" id="btn-cancelar-status">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Modal: Histórico de mudanças de status ===== -->
+  <div class="modal-fundo" id="modal-historico">
+    <div class="modal modal-historico">
+      <div class="modal-cabecalho">
+        <h2>Histórico de Status</h2>
+        <button class="modal-fechar" id="btn-fechar-modal-historico" title="Fechar">✕</button>
+      </div>
+
+      <div class="status-atual-bloco">
+        <span class="modal-status-obra" id="historico-obra-nome"></span>
+      </div>
+
+      <!-- Linha do tempo (gerada pelo obras.js) -->
+      <div class="historico-lista" id="historico-lista"></div>
+
+      <div class="modal-acoes">
+        <button type="button" class="btn-secundario" id="btn-cancelar-historico">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/obras.js"></script>
+</body>
+</html>

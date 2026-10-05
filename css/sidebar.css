@@ -1,0 +1,397 @@
+/* ===== Sidebar ===== */
+:root {
+  --sidebar-largura: 240px;
+  --sidebar-largura-recolhida: 70px;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--sidebar-largura);
+  background: #ffffff;
+  border-right: 1px solid var(--cor-borda);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  z-index: 100;
+  transition: width 0.25s ease;
+  overflow: hidden;
+}
+
+/* ===== Botão ☰ removido — o logo recolhe/expande ===== */
+.sidebar .btn-toggle {
+  display: none;
+}
+
+/* ===== Logo (também é o botão de recolher/expandir) =====
+   Clicar no logo recolhe, clicar no brasão expande */
+.sidebar .logo {
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--cor-borda);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Logo horizontal (expandida) */
+.sidebar .logo img {
+  max-width: 140px;
+  max-height: 44px;
+  object-fit: contain;
+  transition: opacity 0.2s;
+}
+
+/* Brasão (recolhida) — injetado pelo sidebar.js */
+.sidebar .logo .logo-recolhida {
+  display: none;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* ===== Menu ===== */
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 0; /* o slot do ícone já cria o espaçamento — nomes alinhados */
+  padding: 11px 20px;
+  color: var(--cor-texto);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  border-left: 3px solid transparent;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+/* Slot fixo do ícone: todos os nomes começam na mesma coluna */
+.sidebar nav a .menu-icone {
+  width: 34px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sidebar nav a:hover {
+  background: var(--cor-fundo);
+}
+
+/* Item ativo = página atual */
+.sidebar nav a.ativo {
+  background: #e8f0fe;
+  color: var(--cor-primaria);
+  border-left-color: var(--cor-primaria);
+}
+
+/* ===== Estado recolhido ===== */
+.sidebar.recolhida {
+  width: var(--sidebar-largura-recolhida);
+}
+
+/* Esconde o logo horizontal e exibe o brasão centralizado */
+.sidebar.recolhida .logo img:not(.logo-recolhida) {
+  display: none;
+}
+
+.sidebar.recolhida .logo .logo-recolhida {
+  display: block;
+}
+
+.sidebar.recolhida .logo {
+  padding: 0 0 12px;
+}
+
+.sidebar.recolhida nav a {
+  justify-content: center;
+  padding: 11px 0;
+}
+
+.sidebar.recolhida .menu-texto {
+  display: none;
+}
+
+/* Dica visual: título do link aparece ao passar o mouse */
+.sidebar.recolhida nav a:hover::after {
+  content: attr(data-titulo);
+  position: absolute;
+  left: calc(var(--sidebar-largura-recolhida) + 8px);
+  background: #1f2937;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  z-index: 200;
+  white-space: nowrap;
+}
+
+/* ===== Conteúdo acompanha a sidebar ===== */
+body.sidebar-recolhida .conteudo {
+  margin-left: var(--sidebar-largura-recolhida);
+}
+
+.conteudo {
+  transition: margin-left 0.25s ease;
+}
+
+/* ===== Rodapé da sidebar ===== */
+.sidebar .sidebar-rodape {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.sidebar .sidebar-rodape a {
+  color: var(--cor-erro);
+}
+
+/* =========================================================
+   Bloco do usuário (avatar + nome) — injetado pelo sidebar.js
+   ========================================================= */
+.sidebar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+}
+
+.usuario-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e8f0fe;
+  border: 1px solid var(--cor-borda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.usuario-nome {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Alternador de tema (abaixo do usuário) — injetado pelo sidebar.js
+   ========================================================= */
+.btn-tema {
+  display: flex;
+  align-items: center;
+  gap: 0; /* slot fixo do ícone alinha com o menu */
+  width: 100%;
+  padding: 8px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cor-texto);
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.btn-tema:hover {
+  background: var(--cor-fundo);
+}
+
+.btn-tema .tema-icone {
+  width: 34px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Botão Sair: ícone SVG em círculo, igual ao avatar do usuário
+   (o SVG é injetado pelo sidebar.js)
+   ========================================================= */
+.sidebar .sidebar-rodape a#btn-sair {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+  color: var(--cor-erro);
+}
+
+.sair-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fee2e2;
+  border: 1px solid var(--cor-borda);
+  color: var(--cor-erro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ===== Estado recolhido: rodapé organizado ===== */
+.sidebar.recolhida .sidebar-usuario,
+.sidebar.recolhida .btn-tema,
+.sidebar.recolhida .sidebar-rodape a#btn-sair {
+  justify-content: center;
+  padding: 8px 0;
+  gap: 0;
+}
+
+.sidebar.recolhida .usuario-nome,
+.sidebar.recolhida .btn-tema .menu-texto,
+.sidebar.recolhida .sidebar-rodape a#btn-sair .menu-texto {
+  display: none;
+}
+
+/* Tooltips do rodapé quando recolhida */
+.sidebar.recolhida .sidebar-usuario:hover::after,
+.sidebar.recolhida .btn-tema:hover::after,
+.sidebar.recolhida .sidebar-rodape a#btn-sair:hover::after {
+  content: attr(data-titulo);
+  position: absolute;
+  left: calc(var(--sidebar-largura-recolhida) + 8px);
+  background: #1f2937;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  z-index: 200;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TEMA ESCURO — ativado pela classe .tema-escuro no <body>
+   ========================================================= */
+body.tema-escuro {
+  --cor-fundo: #0f172a;
+  --cor-card: #1e293b;
+  --cor-texto: #e2e8f0;
+  --cor-texto-suave: #94a3b8;
+  --cor-borda: #334155;
+}
+
+/* Sidebar */
+body.tema-escuro .sidebar {
+  background: #1e293b;
+}
+
+body.tema-escuro .sidebar nav a.ativo {
+  background: rgba(26, 115, 232, 0.2);
+}
+
+body.tema-escuro .usuario-avatar {
+  background: rgba(26, 115, 232, 0.2);
+}
+
+body.tema-escuro .sair-avatar {
+  background: rgba(220, 38, 38, 0.2);
+}
+
+/* Cards e superfícies com fundo branco fixo */
+body.tema-escuro .card,
+body.tema-escuro .card-obra,
+body.tema-escuro .secao-gantt,
+body.tema-escuro .modal,
+body.tema-escuro .modal-timeline {
+  background: var(--cor-card);
+}
+
+/* Tabelas */
+body.tema-escuro .tabela tbody tr:hover {
+  background: #273449;
+}
+
+/* Inputs, selects e botões de modo */
+body.tema-escuro .barra-filtros input,
+body.tema-escuro .barra-filtros select,
+body.tema-escuro .campo input,
+body.tema-escuro .campo select,
+body.tema-escuro .campo textarea,
+body.tema-escuro .btn-modo,
+body.tema-escuro .campo-percento input,
+body.tema-escuro .filtros-cronograma select,
+body.tema-escuro .btn-acao,
+body.tema-escuro .btn-status-opcao {
+  background: var(--cor-card);
+  color: var(--cor-texto);
+  border-color: var(--cor-borda);
+}
+
+/* Kanban */
+body.tema-escuro .kanban-coluna {
+  background: #172033;
+}
+
+body.tema-escuro .kanban-cartao {
+  background: var(--cor-card);
+}
+
+/* Linha do tempo (cronograma) */
+body.tema-escuro .gantt-escala,
+body.tema-escuro .gantt-espaco {
+  background: #172033;
+}
+
+body.tema-escuro .barra-rotulo {
+  color: var(--cor-texto-suave);
+}
+
+/* Botões de opção de status (modal) */
+body.tema-escuro .btn-status-opcao:hover {
+  background: #1e3a5f;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    width: 100% !important;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    overflow-x: auto;
+  }
+
+  .sidebar nav {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sidebar nav a {
+    border-left: none;
+    white-space: nowrap;
+  }
+
+  .sidebar .sidebar-rodape {
+    margin-top: 0;
+    border-top: none;
+  }
+
+  body.sidebar-recolhida .conteudo {
+    margin-left: 0;
+  }
+
+  .sidebar-usuario,
+  .btn-tema {
+    padding: 8px 12px;
+  }
+}

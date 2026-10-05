@@ -1,0 +1,751 @@
+/* ===== Estilos globais ===== */
+:root {
+  /* Paleta — ajuste aqui e o sistema inteiro muda */
+  --cor-primaria: #1a73e8;
+  --cor-primaria-escura: #1557b0;
+  --cor-fundo: #f4f6f9;
+  --cor-card: #ffffff;
+  --cor-texto: #1f2937;
+  --cor-texto-suave: #6b7280;
+  --cor-borda: #e5e7eb;
+  --cor-sucesso: #16a34a;
+  --cor-erro: #dc2626;
+  --cor-alerta: #f59e0b;
+
+  --raio-borda: 10px;
+  --sombra-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--fonte-principal);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 15px;
+}
+
+/* ===== Layout interno (sidebar + conteúdo) ===== */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.conteudo {
+  flex: 1;
+  padding: 24px 32px;
+  margin-left: 240px; /* largura da sidebar */
+}
+
+/* ===== Cabeçalho da página ===== */
+.pagina-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pagina-titulo h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ===== Cards ===== */
+.card {
+  background: var(--cor-card);
+  border-radius: var(--raio-borda);
+  box-shadow: var(--sombra-card);
+  padding: 20px;
+}
+
+.grid-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi .kpi-rotulo {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+
+.kpi .kpi-valor {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* ===== Botões ===== */
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--cor-primaria);
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: var(--cor-primaria-escura);
+}
+
+.btn-secundario {
+  background: transparent;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+}
+
+/* Botões de ação da tabela */
+.btn-acao {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.btn-acao:hover {
+  background: var(--cor-fundo);
+}
+
+.btn-acao.excluir:hover {
+  background: #fdecea;
+}
+
+/* ===== Formulários ===== */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.campo label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--cor-primaria);
+}
+
+.campo input:disabled {
+  background: var(--cor-fundo);
+  color: var(--cor-texto-suave);
+}
+
+/* Dois campos lado a lado (usado no modal) */
+.campo-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ===== Tabelas ===== */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th,
+.tabela td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.tabela th {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  text-transform: uppercase;
+}
+
+/* Texto longo na tabela (ex: tipo de proposta) */
+.texto-longo {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+/* ===== Etiqueta genérica (ativo/inativo) ===== */
+.etiqueta {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.etiqueta.ativo {
+  background: #dcfce7;
+  color: var(--cor-sucesso);
+}
+
+.etiqueta.inativo {
+  background: #fee2e2;
+  color: var(--cor-erro);
+}
+
+/* ===== Etiquetas de status das obras ===== */
+.etiqueta-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.st-cadastrada   { background: #e0e7ff; color: #4338ca; }
+.st-elaboracao   { background: #fef3c7; color: #b45309; }
+.st-proposta     { background: #dbeafe; color: #1d4ed8; }
+.st-cancelado    { background: #fee2e2; color: #b91c1c; }
+.st-analise      { background: #f3e8ff; color: #7e22ce; }
+.st-andamento    { background: #dcfce7; color: #15803d; }
+.st-encerrado    { background: #d1fae5; color: #047857; }
+.st-pagamento    { background: #ffedd5; color: #c2410c; }
+
+/* ===== Barra de filtros ===== */
+.barra-filtros {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.barra-filtros input,
+.barra-filtros select {
+  padding: 10px 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.barra-filtros input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.barra-filtros input:focus,
+.barra-filtros select:focus {
+  border-color: var(--cor-primaria);
+}
+
+/* ===== Modal ===== */
+.modal-fundo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-fundo.aberto {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 560px;
+  padding: 24px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-cabecalho h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-fechar {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--cor-texto-suave);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.modal-fechar:hover {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+.modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.modal-acoes .btn-secundario {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== Modal de avanço de status ===== */
+.modal-status {
+  max-width: 460px;
+}
+
+.status-atual-bloco {
+  background: var(--cor-fundo);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.modal-status-obra {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rotulo-pequeno {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+
+.status-divisor {
+  text-align: center;
+  margin: 16px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.status-opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Botão de opção de próximo status */
+.btn-status-opcao {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--cor-borda);
+  border-left: 4px solid var(--cor-borda);
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn-status-opcao:hover {
+  background: #f0f6ff;
+  border-color: var(--cor-primaria);
+}
+
+/* Cor da borda esquerda = cor do status (mesma lógica das etiquetas) */
+.btn-status-opcao.st-cadastrada { border-left-color: #4338ca; }
+.btn-status-opcao.st-elaboracao { border-left-color: #b45309; }
+.btn-status-opcao.st-proposta   { border-left-color: #1d4ed8; }
+.btn-status-opcao.st-cancelado  { border-left-color: #b91c1c; }
+.btn-status-opcao.st-analise    { border-left-color: #7e22ce; }
+.btn-status-opcao.st-andamento  { border-left-color: #15803d; }
+.btn-status-opcao.st-encerrado  { border-left-color: #047857; }
+.btn-status-opcao.st-pagamento  { border-left-color: #c2410c; }
+
+.btn-status-opcao .icone-status {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.btn-status-opcao .info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.btn-status-opcao .nome-status {
+  font-weight: 600;
+}
+
+.btn-status-opcao .prazo-status {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+/* ===== Modal de histórico de status ===== */
+.modal-historico {
+  max-width: 500px;
+}
+
+.historico-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 16px;
+}
+
+.historico-item {
+  display: flex;
+  gap: 14px;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+/* Linha vertical conectando os itens (timeline) */
+.historico-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 18px;
+  bottom: 0;
+  width: 2px;
+  background: var(--cor-borda);
+}
+
+/* Bolinha colorida do status de destino */
+.historico-marcador {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--cor-borda);
+  z-index: 1;
+}
+
+.historico-marcador.st-cadastrada { background: #4338ca; }
+.historico-marcador.st-elaboracao { background: #b45309; }
+.historico-marcador.st-proposta   { background: #1d4ed8; }
+.historico-marcador.st-cancelado  { background: #b91c1c; }
+.historico-marcador.st-analise    { background: #7e22ce; }
+.historico-marcador.st-andamento,
+.historico-marcador.st-andamento-tarefa { background: #1d4ed8; }
+.historico-marcador.st-encerrado  { background: #047857; }
+.historico-marcador.st-pagamento  { background: #c2410c; }
+.historico-marcador.st-concluido  { background: #16a34a; }
+.historico-marcador.st-iniciar    { background: #6b7280; }
+
+.historico-conteudo {
+  flex: 1;
+}
+
+.historico-transicao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.historico-seta {
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.historico-data {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+  margin-top: 4px;
+}
+
+.historico-vazio {
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+/* ===== Planner Kanban ===== */
+.planner-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.lista-obras {
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+.lista-obras-titulo {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.obra-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+  color: var(--cor-texto);
+}
+
+.obra-item:hover {
+  background: var(--cor-fundo);
+}
+
+.obra-item.ativo {
+  background: #e8f0fe;
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+.obra-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.obra-contagem {
+  background: var(--cor-borda);
+  color: var(--cor-texto-suave);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.kanban-area {
+  min-width: 0;
+}
+
+.kanban-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.kanban-dica {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--cor-texto-suave);
+}
+
+.kanban {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.kanban-coluna {
+  flex: 0 0 320px;
+  background: #eef1f5;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 220px);
+}
+
+.kanban-coluna.sobre {
+  outline: 2px dashed var(--cor-primaria);
+  outline-offset: -2px;
+  background: #e8f0fe;
+}
+
+.kanban-coluna-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+
+.coluna-icone { font-size: 15px; }
+
+.coluna-nome {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coluna-contagem {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+}
+
+.kanban-coluna-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  min-height: 60px;
+}
+
+.kanban-cartao {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(--sombra-card);
+  padding: 10px 12px;
+  cursor: grab;
+  border-left: 4px solid var(--cor-borda);
+}
+
+.kanban-cartao:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12); }
+.kanban-cartao.arrastando { opacity: 0.5; cursor: grabbing; }
+
+/* Cor da borda pela prioridade */
+.kanban-cartao.prio-alta  { border-left-color: var(--cor-erro); }
+.kanban-cartao.prio-média { border-left-color: var(--cor-alerta); }
+.kanban-cartao.prio-baixa { border-left-color: var(--cor-texto-suave); }
+
+.cartao-nome {
+  font-size: 13px;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.cartao-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.chip-prio { background: var(--cor-fundo); color: var(--cor-texto-suave); }
+
+/* Chip da etapa (status_tarefas) — azul claro */
+.chip-etapa {
+  background: #dbeafe;
+  color: #1d4ed8;
+  text-transform: none;
+}
+
+/* Chips de status da tarefa (colunas do Kanban) */
+.chip-status.st-concluido { background: #dcfce7; color: var(--cor-sucesso); }
+.chip-status.st-andamento { background: #dbeafe; color: #1d4ed8; }
+.chip-status.st-iniciar   { background: #f3f4f6; color: var(--cor-texto-suave); }
+
+.cartao-rodape {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--cor-texto-suave);
+  flex-wrap: wrap;
+}
+
+/* Ações do cartão (histórico / editar) */
+.cartao-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 6px;
+  border-top: 1px solid var(--cor-borda);
+  padding-top: 4px;
+}
+
+.cartao-acoes .btn-acao {
+  font-size: 13px;
+}
+
+@media (max-width: 1024px) {
+  .planner-layout { grid-template-columns: 1fr; }
+  .lista-obras { max-height: 220px; }
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+  .conteudo {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  .campo-linha {
+    grid-template-columns: 1fr;
+  }
+
+  .texto-longo {
+    max-width: 140px;
+  }
+}
